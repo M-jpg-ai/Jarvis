@@ -83,9 +83,11 @@ window.onload = () => {
   // internet connectivity
 
   if (navigator.onLine) {
+    document.querySelector("#internet_img").src="internet1.png"
     document.querySelector("#internet").textContent = "online"
     connectivity = "online"
   } else {
+    document.querySelector("#internet_img").src="internet1.jpg"
     document.querySelector("#internet").textContent = "offline"
     connectivity = "offline"
   }
@@ -138,27 +140,7 @@ window.onload = () => {
   }, 1000);
 };
 
-// function formatAMPM(date) {
 
-//   var hours = date.getHours();
-//   var minutes = date.getMinutes();
-//   var seconds = date.getSeconds();
-//   var ampm = hours >= 12 ? 'pm' : 'am';
-//   hours = hours % 12;
-//   hours = hours ? hours : 12; // the hour '0' should be '12'
-//   minutes = minutes < 10 ? '0'+minutes : minutes;
-//   seconds = seconds < 10 ? '0'+seconds : seconds;
-//   var strTime = hours + ':' + minutes + ':'+seconds+" " + ampm;
-//   currentTime = strTime
-//   time.textContent = strTime
-// }
-
-// formatAMPM(date)
-// setInterval(() => {
-//   formatAMPM(date)
-// }, 1000);
-
-// auto jarvis
 
 function autoJarvis() {
   setTimeout(() => {
@@ -284,9 +266,15 @@ recognition.onresult = function (event) {
   // hi - hello
   console.log(transcript);
   //if(transcript.includes("jarvis")){
-  if (transcript == "jarvis") {
+  if (transcript == " jarvis") {
     readOut("yes sir What can i do for you")
-  } else if (transcript.includes("hi jarvis")) {
+    
+  }
+  else if (transcript.includes("stop")) {
+    speechSynthesis.cancel();
+    readOut("ok sir");
+  } 
+  else if (transcript.includes("hi jarvis")) {
     readOut("hello sir");
   }
   // some casual commands
@@ -384,7 +372,7 @@ recognition.onresult = function (event) {
   // spotify
   else if (transcript.includes("open spotify")) {
     readOut("opening spotify");
-    let a = window.open("https://open.spotify.com/playlist/3ueShdfQIHLtpzisAoCSzf");
+    let a = window.open("https://open.spotify.com/");
     windowsB.push(a);
   }
 
@@ -519,13 +507,6 @@ recognition.onresult = function (event) {
     windowsB.push(a);
   }
 
-  // white hat junior
-  else if (transcript.includes("open white hat junior")) {
-    readOut("opening white hat junior");
-    let a = window.open("https://code.whitehatjr.com/s/dashboard");
-    windowsB.push(a);
-  }
-
   // rediffmail
   else if (transcript.includes("open rediffmail")) {
     readOut("opening rediffmail");
@@ -543,16 +524,6 @@ recognition.onresult = function (event) {
     windowsB.push(a);
   }
 
-  // Mom
-  else if (transcript.includes("open my mum project")) {
-    readOut("opening your mom project");
-    let a = window.open("https://www.tinkercad.com/things/kIrSzgneFZf");
-    windowsB.push(a);
-  } else if (transcript.includes("open my mum design")) {
-    readOut("opening your mom design");
-    let a = window.open("https://www.tinkercad.com/things/kIrSzgneFZf");
-    windowsB.push(a);
-  }
 
   // 101
   else if (transcript.includes("open project 101")) {
@@ -570,10 +541,6 @@ recognition.onresult = function (event) {
     readOut("opening GSLV fatboy project");
     let a = window.open("https://www.tinkercad.com/things/aps6nW1hbXR");
     windowsB.push(a);
-  } else if (transcript.includes("open my gslv fatboy design")) {
-    readOut("opening  GSLV fatboy design");
-    let a = window.open("https://www.tinkercad.com/things/aps6nW1hbXR");
-    windowsB.push(a);
   }
 
 
@@ -586,72 +553,62 @@ recognition.onresult = function (event) {
     windowsB.push(a);
   }
 
-
+  
   //stop speaking(
-  else if (transcript.includes("stop")) {
-    speechSynthesis.cancel();
-    readOut("ok sir");
+  
+
+  else if(transcript.includes("specifications")){
+    var _speedconstant = 1.15600e-8; //if speed=(c*a)/t, then constant=(s*t)/a and time=(a*c)/s
+    var d = new Date();
+    var amount = 150000000;
+    var estprocessor = 1; //average processor speed, in GHZ
+    console.log("JSBenchmark by Aaron Becker, running loop " + amount + " times.     Estimated time (for " + estprocessor + "ghz processor) is " + (Math.round(((_speedconstant * amount) / estprocessor) * 100) / 100) + "s");
+    for (var i = amount; i > 0; i--) {}
+    var newd = new Date();
+    var accnewd = Number(String(newd.getSeconds()) + "." + String(newd.getMilliseconds()));
+    var accd = Number(String(d.getSeconds()) + "." + String(d.getMilliseconds()));
+    var di = accnewd - accd;
+    //console.log(accnewd,accd,di);
+    if (d.getMinutes() != newd.getMinutes()) {
+      di = (60 * (newd.getMinutes() - d.getMinutes())) + di
+    }
+    spd = ((_speedconstant * amount) / di);
+    console.log("Time: " + Math.round(di * 1000) / 1000 + "s, estimated speed: " + Math.round(spd * 1000) / 1000 + "GHZ");
+
+
+    ram_speed=navigator.deviceMemory
+    // loc=navigator.geolocation
+    cpu_speed=navigator.hardwareConcurrency
+    print(cpu_speed)
+    readOut("Sir , Your Ram is"+ ram_speed+"Gigabytes and your Cpu has  "+cpu_speed +" cores with an estimated speed of "+Math.round(spd * 1000) / 1000 + "GHZ")
   }
 
-
-
-  //***********************************************************/
-
-  // if (transcript.includes("add")){
-  //   // let addStr = transcript.split("");
-  //   // console.log(addStr);
-  //   var matches = transcript.match(/(\d+)/);
-  //   console.log(matches);
-  //      let add_num_1 = matches[0];
-  //      console.log(add_num_1);
-  //      if(transcript.includes("and")){
-  //   //     var matches = transcript.match(/(\d+)/);
-  //   // console.log(matches);
-  //      let add_num_2 = trnscript.splice(0,3);
-  //      console.log(add_num_2); 
-  //      }
-  //     readOut("the sum is "+add_num_1);
-  //     // ${add_num_1+add_num_2}`
-  // }
-  // if (transcript.includes("open notepad")) {
-  //   readOut("opening notepad");
-  //   notepad_open();
-  // }
-  // function notepad_open(){
-  // var o = new ActiveXObject("WScript.Shell");
-  // o.Run("notepad.exe");
-  // o = null;
-  // } 
-
+  
   // netlify
   else if (transcript.includes("open net li fi")) {
     readOut("opening netlify");
     let a = window.open("https://app.netlify.com/");
     windowsB.push(a);
-  // } else if (transcript.includes("small")) {
-  //   //readOut("Becoming small");
-  //   small=1;
-  //   if (small) { //
-  //     window.open(`${window.location.href}`, "newWindow", "menubar=true,location=true,resizable=true,scrollbars=false,width=200,height=200,top=0,left=0");
-  //     window.close();
-  //     small = 0;
-  //   }
-  // } else if (transcript.includes("big")) {
-  //   //readOut("becoming big");
-
-  //   if (!small) {
-  //     window.open(`${window.location.href}`, "newWindow", "menubar=true,location=true,resizable=true,scrollbars=false,width=1500,height=800,top=0,left=0");
-  //     window.close();
-  //     small = 1;
-  //   }
-    
-
-  } else {
-    readOut("Sorry sir I did Not Understand what you said");
+ 
   }
 
 
-  //***********************************************************/
+
+
+  // else {
+  //   // readOut("Sorry sir I did Not Understand what you said");
+  //   readOut("here's your result");
+  //   let input = transcript.split("");
+  //   console.log(input);
+  
+  //   input = input.join("").split(" ").join("+");
+
+  //   let a = window.open(`https://www.google.com/search?q=${input}`);
+  //   windowsB.push(a);
+  // }
+
+
+  // //***********************************************************/
 
 }
 //else{readOut("Please follow the syntak of the command")}
@@ -685,8 +642,8 @@ function readOut(message) {
 
 
 
-// small jarvis
-const smallJarvis = document.querySelector("#small_jarvis")
+// small jarvis*
+const smallJarvis = document.quer/ySelector("#small_jarvis")
 
 smallJarvis.addEventListener("click", () => {
   window.open(`${window.location.href}`, "newWindow", "menubar=true,location=true,resizable=false,scrollbars=false,width=200,height=200,top=0,left=0")
@@ -697,4 +654,4 @@ smallJarvis.addEventListener("click", () => {
 
 document.querySelector("#jarvis_start").addEventListener("click", () => {
   recognition.start()
-})
+})                                                                                               
